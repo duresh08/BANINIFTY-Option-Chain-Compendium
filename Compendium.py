@@ -42,7 +42,7 @@ def Send_email(df):
 
     server = smtplib.SMTP('smtp.gmail.com', 587)
     server.starttls()
-    server.login('dhruv.suresh2@gmail.com', 'easiwykbdojoolxt')
+    server.login('dhruv.suresh2@gmail.com', st.secrets["password"])
     server.sendmail(msg['From'], 'f20180884g@alumni.bits-pilani.ac.in' , msg.as_string())
     server.close()
 
