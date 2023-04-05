@@ -59,12 +59,14 @@ while True:
         if current_hour == 3:
             if current_minute > 48:
                 df = Get_option_chain()
+                Send_email(df)
                 email_df = pd.concat([email_df, df])
                 time.sleep(300)
             else:
                 time.sleep(60)
         else:
             df = Get_option_chain()
+            Send_email(df)
             email_df = pd.concat([email_df, df])
             time.sleep(300)
     if email_df.empty:
@@ -72,5 +74,6 @@ while True:
         continue
     else:
         Send_email(email_df)
+        Send_email(df)
         time.sleep(60)
         continue
