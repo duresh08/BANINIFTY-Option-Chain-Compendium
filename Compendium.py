@@ -57,6 +57,8 @@ def Sleeper():
     sleep_time_sec = ((diff - 1) * 60) + (60 - s)
     return sleep_time_sec
     
+st.title("BANKNIFTY Compendium Generator")
+
 while True:
     current_weekday = datetime.datetime.now().weekday()
     email_df = pd.DataFrame()
