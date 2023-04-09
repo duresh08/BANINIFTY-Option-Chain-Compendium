@@ -1,16 +1,15 @@
-import streamlit as st
 import datetime
+from datetime import time
 from nsepython import *
 import warnings
 import requests
 import numpy as np
 import pandas as pd
-
+import streamlit as st
 from urllib.parse import urlencode
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 from email.mime.application import MIMEApplication
-
 from io import StringIO
 import smtplib
 import time
@@ -46,34 +45,38 @@ def Send_email(df):
     server.sendmail(msg['From'], 'f20180884g@alumni.bits-pilani.ac.in' , msg.as_string())
     server.close()
 
-st.title("BANKNIFTY Compendium Generator")
-
+def Sleeper():
+    t = datetime.datetime.now().time().minute
+    s = datetime.datetime.now().time().second
+    upper_three_min = math.ceil(t / 3) * 3
+    diff = upper_three_min - t
+    if diff == 0:
+        diff = 3
+    else:
+        pass
+    sleep_time_sec = ((diff - 1) * 60) + (60 - s)
+    return sleep_time_sec
+    
 while True:
+    current_weekday = datetime.datetime.now().weekday()
     email_df = pd.DataFrame()
-    current_datetime = datetime.datetime.now()
-    current_hour = current_datetime.hour
-    current_minute = current_datetime.minute
-    current_second = current_datetime.second
-    current_weekday = current_datetime.weekday()
-    while current_weekday in range(0,5) and current_hour in range(3,11):
-        if current_hour == 3:
-            if current_minute > 48:
-                df = Get_option_chain()
-                Send_email(df)
-                email_df = pd.concat([email_df, df])
-                time.sleep(300)
-            else:
-                time.sleep(60)
-        else:
+    while current_weekday in range(0,5):
+        current_time = datetime.datetime.now().time()
+        session_start = datetime.time(3,46,00)
+        session_end = datetime.time(10,3,00)
+        while current_time > session_start and current_time < session_end:
+            sleepy_time = Sleeper()
+            time.sleep(sleepy_time)
+            st.write("Sleeping for {} seconds".format(sleepy_time))
             df = Get_option_chain()
             Send_email(df)
             email_df = pd.concat([email_df, df])
-            time.sleep(300)
+            st.write("Email sent for time {}".format(str(datetime.datetime.now().time())))
+        time.sleep(60)
+        st.write("Not within market hours")
     if email_df.empty:
-        time.sleep(60)
-        continue
+        st.write("Weeknd is here")
     else:
+        st.write("Sending final Compendium email")
         Send_email(email_df)
-        Send_email(df)
-        time.sleep(60)
-        continue
+    time.sleep(60)
