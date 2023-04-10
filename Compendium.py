@@ -31,7 +31,7 @@ def Get_option_chain():
 
 def Send_email(df):
     msg = MIMEMultipart()
-    msg['Subject'] = "BANKNIFTY Option Chain"
+    msg['Subject'] = "BANKNIFTY Option Chain {}".format(str(datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')))
     msg['From'] = "dhruv.suresh2@gmail.com"
     msg.add_header('Content-Type','text/html')
 
