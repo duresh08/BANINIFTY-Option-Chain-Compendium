@@ -70,10 +70,13 @@ while True:
             sleepy_time = Sleeper()
             time.sleep(sleepy_time)
             st.write("Sleeping for {} seconds".format(sleepy_time))
-            df = Get_option_chain()
-            Send_email(df)
-            email_df = pd.concat([email_df, df])
-            st.write("Email sent for time {}".format(str(datetime.datetime.now().time())))
+            try:
+                df = Get_option_chain()
+                Send_email(df)
+                email_df = pd.concat([email_df, df])
+                st.write("Email sent for time {}".format(str(datetime.datetime.now().time())))
+            except:
+                st.write("Error in scrapng option chain at time {}".format(str(datetime.datetime.now().time())))
         time.sleep(60)
         st.write("Not within market hours")
     if email_df.empty:
