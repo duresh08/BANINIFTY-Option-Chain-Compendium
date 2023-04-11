@@ -1,5 +1,6 @@
 import datetime
 from datetime import time
+from datetime import timedelta
 from nsepython import *
 import warnings
 import requests
