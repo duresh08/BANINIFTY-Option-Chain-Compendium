@@ -74,7 +74,7 @@ while True:
                 df = Get_option_chain()
                 Send_email(df)
                 email_df = pd.concat([email_df, df])
-                st.write("Email sent for time {}".format(str(datetime.datetime.now().time())))
+                st.write("Email sent for time {}".format(str((datetime.datetime.now() + timedelta(5.5)).time().strftime('%H:%M'))))
             except:
                 st.write("Error in scrapng option chain at time {}".format(str((datetime.datetime.now() + timedelta(5.5)).time().strftime('%H:%M'))))
         time.sleep(60)
