@@ -75,9 +75,9 @@ while True:
                 df = Get_option_chain()
                 Send_email(df)
                 email_df = pd.concat([email_df, df])
-                st.write("Email sent for time {}".format(str((datetime.datetime.now() + timedelta(5.5)).time().strftime('%H:%M'))))
+                st.write("Email sent for time {}".format(str((datetime.datetime.now()).time().strftime('%H:%M'))))
             except:
-                st.write("Error in getting option chain data at time {}".format(str((datetime.datetime.now() + timedelta(5.5)).time().strftime('%H:%M'))))
+                st.write("Error in getting option chain data at time {}".format(str((datetime.datetime.now()).time().strftime('%H:%M'))))
         time.sleep(60)
         st.write("Not within market hours")
     if email_df.empty:
